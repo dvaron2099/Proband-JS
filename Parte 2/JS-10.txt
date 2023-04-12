@@ -1,0 +1,205 @@
+Capitulo 10
+
+Control de flujo y manejo de errores
+
+    - Sentencias de bloque
+    - Sentencias de control de flujo
+    - Sentencias de manejo de excepciones
+
+Sentencia Switch
+
+    - Sintaxis y clausula case  // se comporta de manera similar al if
+    - break                     // se debe colocar al final del case
+    - default                   // es similar al else
+
+Excepciones y tipos de excepciones
+
+    - Definición y usos
+    - Excepciones ECMAScript
+    - DOMExcepciones y DOMError
+
+Try... Catch
+
+    - Sintaxis
+-----------------------------------------------------
+try {
+    fe
+}
+
+catch(error){
+    
+    console.log("Existe error en la variable")  // saltara este error, estos son errores que podemos controlar, los errores de Sintaxis no se muestran de esta manera
+    console.log(typeof error)                   // dirá que es un objeto ya que los errores son objetos
+}
+-----------------------------------------------------
+    - Objeto error
+    - Catch Incondicional   // que no tiene ninguna condición adentro
+    - Catch Condicional     // este so tiene condiciones adentro
+    - Sentencia Throw       // lanza una excepción
+    - Finally               // asi se encuentren errores o no se ejecutara, sobrescribe el valor retornado
+----------------------------------------------------------------------------------------------------------
+Ejercicio
+
+A) Las mesas de examen ya finalizaron y el profesor le tomo un ultimo examen especial a cofla, ya cofla hizo 2 pruebas mas, pero 
+lamentablemente se rompió el sistema de inscripción de notas, por ende habrá que crear una solución a este problema, desarrollando
+una web que sea capas de simular su funcionamiento
+
+    - Crear mini interfaz para introducir nota 
+    - Validar que no haya errores
+    - Se debe promediar la nota del profesor, con otras 2 notas de trabajos anteriores
+    - Si el promedio es mayor a 7/10 -> Aprobó la materia
+
+    verificar en git hub
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>parte 2</title>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<div class="modal-background">
+		<div class="modal">
+			<h3 class="resultado"></h3>
+			<p class="mensaje"></p>
+		</div>
+	</div>
+	<form class="formulario-de-notas">
+		<h2>Introduce la nota del alumno</h2>
+		<input type="number" id="nota">
+		<input type="button" id="snd-nota" value="Otorgar Nota">
+	</form>
+<script src="codigo.js"></script>
+</body>
+</html>
+
+body{
+    color: #333;
+    font-family: sans-serif;
+}
+
+.formulario-de-notas {
+    margin: 50px 18%;
+    text-align: center;
+    background: #26a;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+h2{
+    margin: 0;
+    flex-grow: 1;
+    color: #fff;
+}
+
+input{
+    width: 30px;
+    border: none;
+}
+input[type="button"]{
+    width: auto;
+    margin-left: 6px;
+    color: #48e;
+    background: #fff;
+}
+
+.modal-background {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+}
+
+.modal{
+    background: #fff;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+}
+.resultado {
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+@keyframes aparecer {
+    0% {
+        opacity:0;
+        display: flex;
+    }
+    100% {
+        opacity:0;
+        display: flex;
+    }
+}
+
+
+
+const sendButton = document.getElementById("snd-nota");
+
+
+sendButton.addEventListener("click",()=>{
+    let resultado,mensaje;
+    try{
+        prevRes = parseInt(document.getElementById("nota").value);
+        if (isNaN(prevRes)){
+            throw "Gracioso";
+        }
+        mensaje = definirMensaje(prevRes);
+        resultado = verificarAprobación(8,4,prevRes);
+    } catch(e){
+        resultado = "no te hagas el gracioso";
+        mensaje = "He descubierto que intentaste violar el sitio";
+    }
+    abrirModal(resultado,mensaje);
+})
+
+const definirMensaje = (pr)=>{
+    let resultado;
+    switch(pr){
+        case 1: resultado = "No podes ser tan HDP";
+        break;
+        case 2: resultado = "Sos muy malo para mi materia";
+        break;
+        case 3: resultado = "No sabes casi nada";
+        break;
+        case 4: resultado = "Muy mal";
+        break;
+        case 5: resultado = "Mal";
+        break;
+        case 6: resultado = "Regular";
+        break;
+        case 7: resultado = "Bien, pero puede mejorar";
+        break;
+        case 8: resultado = "Muy bien";
+        break;
+        case 9: resultado = "Excelente";
+        break;
+        case 10: resultado = "Insuperable";
+        break;
+        default: resultado = null;
+    }
+    return resultado
+}
+
+const verificarAprobación = (nota1,nota2,prevRes)=>{
+    promedio = (nota1 + nota2 + prevRes)/3;
+    if(promedio>=7){
+        return"<span class='green'>APROBADO</span>";
+    }
+    return "<span class='red'> DESAPROBADO</span>"
+}
+const abrirModal = (res,msg)=>{
+    document.querySelector(".resultado").innerHTML = res;
+    document.querySelector(".mensaje").innerHTML = msg;
+    let modal = document.querySelector(".modal-background");
+    modal.style.display = "flex";
+    modal.style.animation = "aparecer 1s forwards";
+}

@@ -1,0 +1,149 @@
+
+Terminal: Ventana que nos muestra el prompt. Este aloja a la shell
+
+Linea de comandos (shell): Un programa que toma comandos y los pasa al sistema operativo para hacer algo
+    Tipos de shell
+
+    - Bourne shell
+    - Bash shell
+    - Z shell
+    - C shell
+    - Korn shell
+    - Fish shell
+    - PowerShell    --- de windows
+
+----comandos Ubuntu-----
+    - ls: lista los archivos y directorios en el directorio actual.
+    - cd: cambia el directorio actual.
+    - mkdir: crea un nuevo directorio.
+    - rm: elimina archivos y directorios.
+    - cp: copia archivos y directorios.
+    - mv: mueve o renombra archivos y directorios.
+    - cat: muestra el contenido de un archivo en la pantalla.
+    - grep: busca texto en archivos.
+    - ps: muestra los procesos en ejecución.
+    - kill: detiene un proceso en ejecución.
+    - chmod: cambia los permisos de acceso a archivos y directorios.
+    - sudo: permite al usuario realizar tareas con permisos de superusuario.
+    - tar: crea y extrae archivos comprimidos.
+    - ssh: inicia una sesión segura de shell remota en otro sistema.
+    - ping: comprueba la conectividad de red.
+    - reset: resetea la Terminal
+    - clear: limpia la Terminal - se activa con crt + l
+    - pwd: en que directorio estamos ubicados
+    - cd: cambiar de directorio, con punto o dos puntos retrocede
+    - ~ cuando sale asi es que estamos en nuestro directorio
+    - touch web.html --- crea un archivo que se llama web y es de html, si no se coloca extension lo creara como archivo de text osea .txt
+    - code .---abrirá VS Code, recordar que sin el espacio no abre
+    - ls -la --- lista con archivos ocultos, los que estén con punto y texto son los ocultos
+    - ls -lSh --- lista las características de los archivos y la h traduce el peso
+    - ls -lr --- similar a ls -lS pero los ordena al contrario, de menor a mayor peso
+    - tree -L --- muestra todos los archivos, se puede colocar por niveles 1, 2 etc
+    - cp web.html web_bt.html --- copia el primer archivo y lo re nombra
+    - mv web_bt ..--- mueve ese archivo hacia atrás 
+    - rm archivo --- remueve el archivo
+    - rm -i archivo --- lo mismo pero pregunta antes, respondes y si lo quieres eliminar o n si no
+    - rm -r directorio --- remueve todo el directorio rf fuerza todo sin importar, y ri pregunta antes de borrar, no es recomendable usar rf
+    - head crear.md -n 15- muestra el archivo de texto crear.md, muestra las 10 primeras por defecto, si se desea mostrar mas se coloca -n # que # es el numero de lineas, en el ejemplo son 15
+    - tail --- funciona igual pero en vez de ser la primeras, muestra las ultimas
+    - less --- muestra toda el contenido, termina en END y si se cambia por "/", y se coloca la palabra que se desea buscar, la encuentra
+
+Un comando es
+    - Un programa ejecutable
+    - Un comando de utilidad de la shell
+    - Una funciona de shell
+    - Un alias
+    
+    - type comando --- dice la naturaleza del comando
+    -  alias l="ls -lh" --- crea un nuevo comando, l que es como si colocáramos el comando ls -lh, debe ser en dobles comillas pero son temporales
+    - help comando --- muestra una descripción del comando, en algunas shell se pueden usar otros comandos
+    - man comando --- muestra el manual del comando
+    - whatis comando --- muestra brevemente lo que es el comando
+
+    Wildcards
+     - ls datos* --- busca los que comiencen en datos
+     - ls datos? --- igual pero que tengan un solo carácter, el numero de interrogantes muestra el numero de caracteres, ??? son tres caracteres por ejemplo
+     - ls *.html --- busca los que terminen igual lo que se coloque, en este caso los que sean .html
+     - ls [[:upper:]]*--- que inicie con mayúscula y siga con cualquier carácter, aparecerán mas archivos porque busca el contenido de las carpetas de hasta dos niveles
+     - ls -d [[:upper:]]* --- asi solo se buscara en la carpeta local, sin meterse a otras carpetas
+     - ls [[:lower:]]* y ls -d [[:lower:]]* --- similar pero con minúscula
+     - ls [[ad]]* --- busca los archivos que inicien o con una letra "a" o con una letra "d"
+    
+    - echo "oe" --- genera un standard output que dice oe en la Terminal
+    - ct --- concatena la salida de los archivos
+    - ls -lh | less --- usa el pipe operator para ver y re dirigirlo al comando less para poder usarlo
+    - ls -lh | tee output.txt |less --- esto, ademas de lo anterior, crea y lo guarda en un archivo de nombre tee output.txt
+    - ls -lh Pictures | sort | tee Pictures.txt |less --- ademas de lo anterior, lo ordena pero ya tomándolo de la carpeta Pictures, esto es una forma de filtrado
+    - cowsay "hola" --- saca una vaquita que diga hola
+    - ls; mkdir hola; cal ---crea el calendario hola a la vez crea un calendario, de manera síncrona
+    - ls & date & cal --- 
+
+    - Comandos separados por punto y coma “;” : Se ejecutan uno seguido del otro en el orden en que fueron puesto. Uno no se ejecuta hasta que el otro proceso aya terminado.
+    – Comandos separados por & : Se ejecutan todos al mismo tiempo, es decir de forma asíncrona.
+    – Comandos separados por && : Se ejecutan solo si el comando anterior se aya ejecutado exitosamente. Suponemos que A, B y C son comando:
+        A && B && C
+        El B solo se va ejecutar si el A se ejecuta exitosamente, y el C solo se va ejecutar si el B si ejecuta exitosamente. Si el B no se ejecuta exitosamente el C no se ejecuta. Si el A no se ejecuta exitosamente el B y el C no se ejecutan.
+    – Comandos separados por || : Solo se ejecuta uno. Sea cuantos comandos tienes separados por || solo ejecuta o toma en cuenta el primer que se ejecuta exitosamente (bajo la redundancia), y descarta automáticamente los demás. Cuando uno de los comandos se ejecuta exitosamente, descarta los demás comandos.
+    
+Tipos de archivos
+
+El primer carácter puede ser uno de estos 3
+
+"-" Es un archivo normal, como un documento de texto, una foto, un video, etc.
+"d" Por directory es un directorio
+"l" Es un enlace simbólico
+"b" Bloque especial, son archivos que manejan informacion para el sistema, como la informacion de un disco duro
+
+Permisos de usuario
+
+Los siguientes caracteres se leen en 3 en 3, po cada uno de los tipos de usuario
+
+Owner
+El dueño del archivo, si no se ha cambiado, es quien lo crea y tiene la mayor jerarquía sobre los otros 3.
+Le corresponden los primero 3 caracteres de los permisos
+
+Group
+Se puede crear grupos de usuarios para darle a todo o varios los mismos permisos. A estos usuarios le corresponden
+el cuarto, quinto y sexto carácter de los permisos de usuarios y tienen mayor jerarquía que el ultimo
+
+World
+También llamado "otros", es cualquier otro usuario que no pertenezca a un grupo de usuario y tampoco sea el dueño, este tiene la menor jerarquía
+
+Tipos de permisos
+
+"r" --- readable    --- Significa que puede leer su contenido
+"w" --- writable    --- El usuario puede editar el contenido del archivo, también el nombre y los permisos
+"x" --- executable  --- El usuario puede ejecutarlo en caso de que sea un programa
+
+Los permisos se escriben en ese orden rwx. Para indicar que el permiso no esta disponible, se escribe un guion.
+
+"d"     --- Esto es un directorio   ---
+"rwx"   ---         Owner           --- El dueño puede leer, escribir y ejecutar
+"r-x"   ---         Group           --- El grupo puede leer y ejecutar
+"r-x"   ---         World           --- Los demás pueden leer eje
+
+r - w - x
+1 - 1 - 1   Binario
+    7       Octal
+
+r - w - x
+1 - 0 - 1   Binario
+    5       Octal
+
+r - w - x
+1 - 0 - 1   Binario
+    5       Octal
+    grep (Regular Expression)
+    - grep Towers movies.csv --- busca todas las lineas que tenga la palabra "Towers"
+    - grep the movies.csv --- busca lo que tenga "the" dentro del archivo, esto es case sensitive por lo que importa si esta en mayúscula o no, para quitarlo se debe colocar de esta manera "grep -i the movies.csv"
+    
+    sintaxis --- grep [ExpresiónRegular] [archivoDondeBuscar]
+
+    si quieres saber cuantas veces se repite una palabra, usando la opción "-c" seguida de la palabra que quieres buscar, ci para ignorar el case sensitive
+    grep -c Drama movies.csv
+    grep -v Drama movies.csv --- saca todas las que no contengan la palabra Drama, vi para ignorar el case sensitive
+    wc movies.csv 
+ifconfig    - muestra la configuración de los dispositivos de red
+ping        - Envía paquetes a una dirección para comprobar su conectividad
+curl        - Muestra por consola el archivo devuelto or la dirección
+wget        - guarda el archivo devuelto por la dirección

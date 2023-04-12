@@ -1,0 +1,148 @@
+Capitulo 3
+------------
+Programacion orientada a objetos
+--------------------------------------------
+class animal {
+	constructor(especie,edad,color){
+		this.especie = especie;
+		this.edad = edad;
+		this.color = color;
+		this.info = `Soy ${this.especie}, tengo ${this.edad} años y soy de color ${this.color}`;
+	}
+	verInfo(){
+		document.write(this.info + '<br>')	//aqui no funcionan las funciones flechas
+	}
+}
+
+const perro = new animal('perro', 5,'marron')	//new instancia un objeto de la clase animal con los parametros indicados
+const gato = new animal('gato', 2,'negro')		//los objetos DEBEN SER DEFINIDOS CON CONST
+const pajaro = new animal('pajaro', 1,'verde')
+
+perro.verInfo();
+gato.verInfo();
+pajaro.verInfo();
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Abstraccion --- intentar reducir lo que mas se pueda el objetos
+Modularidad --- capacidad de resolver propblemas grandes, separandolo por partes
+Encapsulamiento --- encapsular la data para que los datos no salgan de manera tan sencilla
+Polimorfismo --- consiste en ver como un objeto se comporta de manera distinta bajo el mismo metodo debido a sus propiedades
+--------------------------------------------
+
+class animal {
+	constructor(especie,edad,color){
+		this.especie = especie;
+		this.edad = edad; 
+		this.color = color;
+		this.info = `Soy ${this.especie}, tengo ${this.edad} años y soy de color ${this.color}`;
+	}
+	verInfo(){
+		document.write(this.info + '<br>')	//aquí no funcionan las funciones flechas
+	}
+	ladrar(){
+		if (this.especie == "perro"){		//Polimorfismo
+			document.write("perro ladrando"+ "<br>")
+		} else{
+			document.write("no puede ladrar, ya que es un " + this.especie + "<br>")
+		}
+	}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Herencia --- (extense)
+
+class Animal {
+	constructor(especie,edad,color){
+		this.especie = especie;
+		this.edad = edad; 
+		this.color = color;
+		this.info = `Soy ${this.especie}, tengo ${this.edad} años y soy de color ${this.color}`;
+	}
+	verInfo(){
+		document.write(this.info + '<br>')
+	}
+}
+class Perro extends Animal{					//de esta manera se usa herencia
+	constructor(especie,edad,color,raza){	//se coloca el constructor con las características de la clase
+		super(especie,edad,color);			//se colocan las características que se heredaran, en este caso de Animal
+		this.raza = raza;
+	}
+	ladrar(){
+		alert("Woww")
+	}
+}
+
+
+
+const perro = new Perro('perro', 5,'marron',"chihuahua")	//tener cuidado, no se puede tener un objeto con el mismo nombre de la clase
+const gato = new Animal('gato', 2,'negro')
+const pájaro = new Animal('pájaro', 1,'verde')
+
+perro.ladrar();		//perro va a ladrar
+gato.ladrar()		//gato no ladrara porque no tiene esa característica 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Metodos estaticos --- (static)
+
+class Perro extends Animal{					
+	constructor(especie,edad,color,raza){	
+		super(especie,edad,color);			
+		this.raza = raza;
+	}
+	static ladrar(){			// no necesita que la clase este definida, para poder ser creado; si se coloca sin crear el objeto saltara el "waw", si se coloca alguna característica como especia, salta undefined 
+		alert("Waw")
+	}
+}
+
+Metodos Accesores (getters, setters)
+getters --- obtener un valor
+setters --- modificar o definir un valor
+
+
+class Perro extends Animal{					
+	constructor(especie,edad,color,raza){	
+		super(especie,edad,color);			
+		this.raza = raza;
+	}
+	set modificarRaza (newName){	// modificar un valor
+		this.raza = newName
+	}
+	get getRaza(){					//se obtiene un valor
+		return this.raza;
+	}
+}
+
+perro.modificarRaza = "Pedro"	// esto se debe escribir como una propiedad a pesar de que sea un método
+document.write(perro.getRaza)
+--------------------------------------------
+Ejercicio 3
+A) Cofla entro a una tienda que vende celulares porque le parecio bastante bueno comprarse un nuevo celular.
+De todos los modelos que hay disponibles en esa tienda, a cofla le llamaron la atencion 3 telefonos especificamente,
+El problema es que ningun vendedor sabe nada al respecto entonces no pueden recomendarle absolutamente nada... per claro:
+el antes de comprar esos celulares quiere ver las cualidades y comportaminetos de cada uno para poder comprarlos, ahi
+entramos nosotros.
+
+	CREAR SOLUCIONES
+
+	- Crear un sistema para mostrarle a cofla las particularidades de los 3 celulares.
+	- Cada celular debe tener color, peso, resolucion de pantalla, resolucion de camara y memoria ram
+	- Cada celular debe poder prender, reiniciar, apagar, tomar fotos y grabar
+
+B) Cofla no esta satisfecho con los celulares asi que decide ir a la seccion de celulares de alta gama, donde va a poder
+encontra los celulares mas caros del lugar, asi que al entrar vio dos celulares que le encantaron, estos 2 celulares de alta
+gama pueden hacer todo lo que podian hacer los 3 anteriores pero tienen mejores características y ademas pueden grabar en
+camara super lenta, tiene reconocimiento facila y una camara extra.
+
+	CREAR SOLUCIONES
+	
+	- Implementar todas las cualidades en los celulares de alta gama
+
+C) Cofla ya tiene su nuevo celular y ahora esta mirando las palicaciones de la Play Store ya que quiere jugar juegos
+que sean muy populares, que tengan buena puntuacion y que pesem poco, pero las 7 apps que llamaron su atencion son un tanto similares
+y sabe que si se descarga todas, probablemente juegue con todas, pero el se va a descargar solo 2 para tener perdidas
+innecesarias de tiempo jugando juegos con su celular, pero el problema viene cuando no puede decidirse cual de todas estas
+aplicaciones es la que va a descargar.
+
+	CREAR SOLUCIONES
+
+	- Crear un sistema que ayude a cofla a decidir cual app descargar.
+	- La informacion de los instaladores debe contener la cantinidad de descargas, la puntuacion y el peso 
+	- Las Apps se deben poder instalar, abrir, cerrar y desinstalar

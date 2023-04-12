@@ -1,0 +1,27 @@
+Capitulo 11
+
+Cuando algo se vuelve obsoleto
+
+    - "Deprecated"
+    - Inútil
+    - No recomendado
+    - Con bugs o fallos
+    - Esta por ser reemplazado
+    - Hay mejores formas de hacerlo
+
+Los efectos negativos (aplicando a métodos, clases y propiedades)
+
+    - Uso excesivo de recursos
+    - Código con Bugs o fallos
+    - Código innecesariamente largo
+    - SEO
+
+Como verificar si esta obsoleto
+
+    - 1 de cada 3 WEBS utiliza librerías de JavaScript obsoletos
+    - verificar si tienen o usan funciones, métodos, objetos o metodologías obsoletas
+    - verificar en los sitios basados en estándares oficiales
+
+Detectar navegadores obsoletos
+
+    - Detección del navegador y cobertura a multiples navegadores       //colocar en google

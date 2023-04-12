@@ -1,0 +1,259 @@
+Capitulo 6
+----------------------------------------------
+DOM 
+ - Definicion
+ - Concepto extendido
+
+ - Nodo -  Un en el Dom es cualquier etiqueta del cuerpo, como un parrafo, el mismo body o incluso las etiquetas de una lista
+
+ *Document: en nodo document es el nodo raiz,, a partir del cual derivan el resto de nodos.
+ *Element: nodos definidos por etiquetas html
+ 
+ tipo text (texto)
+
+*Attribute: los atributos de las etiquetas definen nodos, (en JavaScript no los veremos como nodos, si no como informacion asociada al nodo de tipo element)
+*Comentarios y otros: los comentarios y otros elementos como las declaraciones doctype en cabecera de los documentos HTML generan nodos
+
+
+
+
+----------------------------------------------Document - Metodos de seleccion de elementos----------------------------------------------
+-getElementById() - Selecciona un elemento por identidad
+
+párrafo = document.getElementById("párrafo")    //[objeto HTMLParagraphElement]
+document.write(párrafo)
+
+-getElementsByTagName() - Selecciona todos los elementos que coincidan con el nombre de la etiqueta especificada
+
+párrafo = document.getElementsByTagName("p")    //[objeto HTMLCollection]
+document.write(párrafo)
+
+-querySelector() - Devuelve el primer elementos que coincida con el grupo especificado de selectores
+
+párrafo = document.querySelector(".párrafo")    //[objeto HTMLParagraphElement], recordar que los parrafos se seleccionan por puntos, los id son con # recordar CSS
+document.write(párrafo)
+
+-querySelectorAll() - Devuelve todos los elementos que coincidan con el grupo especificado de selectores
+--------------------------------------------------------------------------------------------
+Metodos para definir, obtener y eliminar valores de atributos
+----------------------------------------------
+-setAttribute() - Modifica el valor de un atributo
+-getAtribute() - obtiene el valor de un atributo
+
+const rangoEtario = document.querySelector(".rangoEtario"); //en HTML la clase .rangoEtario es de tipo range
+document.write("<br>" + rangoEtario.getAttribute("type"))   //con getAttribute podemos extraer el type y ver que se trata de un range
+rangoEtario.setAttribute("type","text")                     //con setAttribute cambiamos el type por text
+document.write("<br>" + rangoEtario.getAttribute("type"))   //ahora usando nuevamente getAttribute podemos ver que rangoEtario ya no es range si no que es text
+
+-removeAtribute() - remueve el valor de un atributo
+
+rangoEtario.removeAttribute("type")                         //de esta manera, type ya no existe, si queremos volver a colocar el atributo, con getAtribute lo podemos hacer
+
+----------------------------------------------Atributos globales----------------------------------------------
+- class - lista de clases del elemento separadas por espacios (ya se explicaron)
+- id - define un identificador unico (ya se explicaron)
+
+- contentEditable - indica si el elemento puede ser modificable por el usuario (bool)
+
+<h1 class="titulo">Este es un TITULO</h1>	//en HTML tenemos esto
+
+const titulo = document.querySelector(".titulo")	//seleccionamos la clase titulo
+titulo.setAttribute("contentEditable","false")		//si le añadimos el atributo contentEditable y colocamos "true", podremos editar directamente de la pagina, si colocamos false no podremos
+
+- dir - indica la direccionalidad del texto
+
+const titulo = document.querySelector(".titulo")
+titulo.setAttribute("dir","rtl") 					//direccion left to right (ltr) por defecto y right lo left (rtl) al contrario, pero es recomendable hacerlo por CSS
+
+- hidden - indica si el elemento aun no es, o ya no es, relevante
+
+const titulo = document.querySelector(".titulo")
+titulo.setAttribute("hidden","true") 				//asi este true o false, o asi no tenga nada, el elemento desaparecera aunque en consola seguire
+
+- style - contiene declaraciones de estilo CSS para ser aplicadas al elemento
+
+- tabindex - indica si el elemento puede obtener un focus de input
+
+const titulo = document.querySelector(".titulo");
+titulo.setAttribute("tabindex","3")					//para que enfoque debe oprimirse la tecla tabular
+
+- title - contiene un texto con informacion relacionada al elemento al que pertenece
+
+const titulo = document.querySelector(".titulo");
+titulo.setAttribute("title",'probando title')		//cuando coloques el mouse sobre lo que tenga el atributo title, aparecera en este caso "probando title"
+----------------------------------------------Atributos de Inputs----------------------------------------------
+-className
+-value
+-type
+
+const input = document.querySelector(".input-normal");
+
+document.write(input.className + '<br>')	// indica el nombre de la clase, en este caso input-normal
+document.write(input.value + '<br>')		// indica el valor, lo que esta adentro, esto se define desde HTML
+input.type = "color"						//se puede cambiar directamente el tipo de input de esta manera, directamente desde el objeto
+input.type = 'text'
+document.write(input.type + '<br>')
+
+-accept
+
+const input = document.querySelector(".input-normal");
+input.accept = "image/png"      // usado para los inputs de tipo file, osea archivos e indica que tipo de archivo acepta, en este caso serian archivos png
+
+-form
+
+<body>
+
+	<form id="formulario">
+		<input type="text" name="">
+		<input type="submit" name="">
+	</form>
+	<input type="submit" form="formulario">		//asi no haga parte del formulario, si se usa el id se puede incluir
+
+<script src="codigo.js"></script>
+</body>
+
+-minlength
+
+const input = document.querySelector('.input-normal ')
+input.minLength = 5					//permite que se realice la accion solamente si el input tiene minimo 5 caracteres
+
+-placeholder
+
+const input = document.querySelector('.input-normal ')
+input.placeholder = "holaa"								// permite que aparezca un texto en el input que desaparecera cuando introduzcamos algo
+
+-required
+
+const input = document.querySelector('.input-normal ')
+input.required = "h"        // no importa a lo que sea igual, siempre y cuando este, ese campo debe ser requerido por lo que no se podrá enviar algo sin que ese espacio este lleno
+
+ style
+
+ const input = document.querySelector('.input-normal ')
+input.style.color = '#32b'
+--------------------------------------------------------------------------------------------
+Clases, classlist y metodos de classlist
+
+Definicion y usamos
+
+- add() - añade una clase
+
+const input = document.querySelector('.input-normal ')
+input.classList.add("grande")			// añade una clase que en este caso se llama "grande"
+
+- remove() - remueve una clase
+
+const input = document.querySelector('.input-normal ')
+input.classList.add("grande")
+input.classList.remove("grande")		//remueve la clase previamente creada, grande
+
+- item() - devuelve la clase del inidce especificado
+
+const input = document.querySelector('.input-normal ')
+document.write(input.classList.item(1))					// se colocaron tres clases, input-normal, rojo, blanco en ese orden y este toma la que este en la posicion 1 que es rojo
+
+- contains() - verifica si ese elemento posee o no, la clase especificada
+
+document.write(input.classList.contains('rojo'))	// si tiene la clase rojo saldra true, de lo contrario sera false
+
+- replace() - reemplaza una clase por otra
+
+input.classList.replace('rojo','azul')				//reemplaza la clase rojo por la clase azul
+
+- toggle() - si no tiene la clase especificada, la agrega, si ya la tiene, la elimina
+
+input.classList.toggle('rojo')		//si tiene clase rojo la quita, si no la agrega pero si colocamos una coma y el booleano true, la agregara y si ya esta la dejara y si colocamos false la quitara y si no esta simplemente no la pondra
+									//si la clase no existe la agrega y nos muestra true
+									//si la clase existe la la remueve y nos muestra false
+input.classList.toggle('rojo')
+--------------------------------------------------------------------------------------------
+Obtencion y modificacion de elementos
+
+- textContent - devuelve el texto de cualquier nodo
+
+const titulo = document.querySelector('.titulo')
+let resultado = titulo.textContent;
+document.write(resultado)
+
+- innerText - devuelve el texto visible de un node element
+- outerText - devuelve el texto que se encuentra en las etiquetas
+
+- innerHTML - devuelve el contenido html de un elemento
+- outerHTML - devuelve el codigo HTML completo del elemento
+
+
+const titulo = document.querySelector('.titulo')
+
+let resultado = titulo.textContent;
+let resultado2 = titulo.innerHTML;
+let resultado3 = titulo.outerHTML;
+
+
+alert(resultado)        //Elemento a modificar
+alert(resultado2)       //Elemento a <b style="visibility: hidden;">modificar</b>
+alert(resultado3)       //<p class="titulo grande rojo circular">Elemento a <b style="visibility: hidden;">modificar</b></p>
+--------------------------------------------------------------------------------------------
+Creacion de elementos
+- createElement()
+- createTextNode()
+- appendChild()
+
+const contenedor = document.querySelector('.contenedor')
+const item = document.createElement('LI');      //como JS es sensitivo, se debe colocar en mayúscula
+const textoDelItem = document.createTextNode("Este es un item de la lista") //crea este nodo de texto
+item.appendChild(textoDelItem)          //añade este nodo al nodo Item
+console.log(item)                       //aparecerá en consola <li>Este es un item de la lista</li>
+contenedor.appendChild(item)            //coloca item (que li es lista no ordenada) dentro de contenedor( Este es un item de la lista )
+
+- createDocumentFragment() //no lo entendi
+
+--------------------------------------------------------------------------------------------
+Obtencion y modificacion de child
+
+- firstChild - toma el primer hijo del contenedor, si el hijo esta en la siguiente linea del inicio, tomara un espacio en blanco ya que ese espacio lo tomara como primer hijo
+- lastChild - toma el ultimo hijo del contenedor, si el final del contenedor esta abajo del hijo, tomara un espacio en blanco ya que ese espacio lo tomara como ultimo hijo
+- firstElementChild - lo mismo que el primero pero sin tomar en cuenta lo del espacio, tambien cuenta con lastElementChild
+- childNodes - nos devuelve todos los nodos hijos, es un NodeList, que no es un array, tomando los espacios que aparecera como "texto"
+				Esto no es un array, pero podemos recorrerlo con un forEach aunque no se le pueden aplicar otras propiedades del array
+- children - nos devuelve los elementos hijos, no devuelve el texto, sino que unicamente devuelve las etiquetas HTML pero podemos recorrer con HTML con forEach pero si con un for in, pero es mejor con un for of para mostrar los elementos y no los indices
+
+--------------------------------------------------------------------------------------------
+Metodos de child
+
+- replaceChild() - permite remplazar un hijo, se coloca padre.replaceChild(hijoOriginal,hijoNuevo)
+
+- removeChild() - remueve un hijo, se coloca padre.removeChild(hijo)
+
+- hasChildNodes() - verifica si en nodo tiene o no hijos
+
+--------------------------------------------------------------------------------------------
+propiedades de parents (padres)
+
+- parentElement	busca el elemento padre
+
+- parentNode : Busca un nodo padre aunque por lo general ambos son similares
+
+--------------------------------------------------------------------------------------------
+propiedades de siblings (Hermanos)
+
+- nextSibling
+- previousSibling
+- nextElementSibling
+- previousElementSibling
+Nota: misma explicacion de firstChild, lastChild, firstElementChild y  lastElementChild
+--------------------------------------------------------------------------------------------
+Nodos - Extras
+
+- closest() --- busca el elemento ascendente mas cercano que coincida con nuestro selectores\
+console.log(div.closest('.div'))
+
+Final Cofla
+
+Cofla se quedo encerrado en su casa porque se le rompio la llave, pero necesita ir urgente a la facultad porque no puede faltar ni una sola vez
+si quiere aprobar las materias que le faltan, ya que esta al limite de asistencias, entonces tiene que llamar un cerrajeto y pedirle que traiga
+la llave indicada, no hay tiempo suficiente como para que el cerrajero vea cual es la llave indicada, solo puede traer una y probar, entonces cofla
+se da cuenta que es una llave antigua, por ende no hace falta afilarla, solo necesita decirle el modelo de llave para que el cerrajeto y determiar
+cual es la indicada, hay solo 20 modelos posibles, permitir que cofla seleccione el indicado.
+
+_Crear sistema que le muestra a cofla las llaves posibles, con sus 4 imagenes y cofla debe seleccionar cual llave elegir, una vez que cofla selecciono
+la llave, envia los datos al servidor, otro programador se encargara de el resto

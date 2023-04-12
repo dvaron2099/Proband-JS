@@ -1,0 +1,138 @@
+Que es JS
+
+- Lenguaje de programacion
+- Interpretado
+- Orientado a objetos
+- Imperativo
+- Case sensitive (es sensible a mayusculas y minusculas)
+- Basado en prototi[ps / instancias / classless.
+- Tipado debil (el valor de las variables pueden cambiar)
+- Lenguaje dinamico
+
+se usa para
+
+- Dinamismo de los sitios web
+- Servidor en NodeJS
+- Tecnologias Frontend como Angular, React o Vue.JS
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Capitulo 1
+------------
+Tipos de datos
+string --- Cadena de texto, se escribe en comillas simples o dobles
+number --- es simplemente un numero, no va entre comillas, si fuera asi seria un string
+booleano --- son dos, 0 y 1 que se traducen como true o false
+
+Casos especiales
+Undefined --- variable no definida o existe un error
+Null --- es una variable declarado intencionalmente vacio 
+Nan --- Not a Number, saltara cuando aparezca una operacion pero con valores que no sean numeros como multiplicar un string y un numero
+
+debemos declarar la variable
+let numero=2		/*let declara la variable numero que es igual a dos en un alcance regional, esta puede cambiar*/
+const numero=2		/*const declara la variabel como constante y no se puede modificar*/
+
+---el punto y coma (;) no es necesario pero es una buena practica de programacion---
+
+let nombre = prompt("decime tu nombre")		//saltara una pantalla que diga 'decime tu nombre' y lo que escribamos se guardara en la variable declarada 'nombre;
+alert('hola ' + nombre)
+
+Operadores
+
+
+Nombre						      Abreviacion	Significado
+Asignacion------------------------------------------- X = Y		X = Y		
+Asignacion de adicion-------------------------------- X += Y		X = X + Y
+Asignacion de sustraccion---------------------------- X -= Y		X = X - Y
+Asignacion de multiplicacion------------------------- X *= Y		X = X * Y
+Asignacion de division------------------------------- X /= Y		X = X / Y
+Asignacion de resto---------------------------------- X %= Y		X = X % Y	// Se dividen dos numeros y si el resultado es exacto mostrara cero, si no motrara el restanto por ejemplo 50 %=6 dara 2
+Asignacion de exponenciacion------------------------- X **= Y 		X = X ** Y
+Asignacion de desplazamiento a la izquierda---------- X <<= Y 		X = X << Y
+Asignacion de desplazamiento a la derecha------------ X >>= Y		X = X >> Y
+Asignacion sin signo de desplazamiento a la derecha-- X >>>= Y		X = X >>> Y
+Asignacion AND--------------------------------------- X &= Y		X = X & Y
+Asignacion XOR--------------------------------------- X ^= Y		X = X ^ Y
+Asignacion OR---------------------------------------- X |= Y		X = X | Y
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+concatenar
+basicamente es unir texto
+----------------------------------------
+saludo = 'hola pedro'
+pregunta = ' como estas'
+frase = saludo + pregunta
+document.write(frase)		//esto botara hola pedro como estas
+----------------------------------------
+saludo = 3
+pregunta = 2
+frase = "" + saludo + pregunta	// se puede hacer de esta forma --saludo.concat(pregunta)-- la variable 'saludo' debe ser cadena, si no, no arrojara nada pero si se realiza bien arrojara en este caso 32
+document.write(frase)		//esto botara 32 porque al añadirle una cadena, los numeros los convertira en cadena automaticamente esto se le llama forzar un string
+----------------------------------------
+nombre = "David Varon"
+frase = `soy ${nombre} y estoy caminando`;
+document.write(frase);				//de esta manera arrojara la frase 'soy David Varon y estoy caminando' y debe hacerse con ${} y se recomienda usar backticks (```) para trabajar
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Operadores de comparacion
+si la relacion se cumple saltara true de lo contrario sera false
+
+igualda		(a == b)	//aplica incluso se uno es cadena y el otro es numero, si son el mismo valor sera true
+diferencia	(a != b)
+identidad	(a === b)	// similar al igual pero este verifica que tambien sean el mismo tipo de dato, asi sean iguales si uno es numero y el otro cadena saltara false
+No identidad	(a !== b)
+mayor que	(a > b)
+mayor o igual	(a >= b)
+menor		(a < b)
+menor o igual	(a <= b)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Operadores logicos
+esto solo funciona con booleanos
+----------------------------------------
+num1 = 12
+num2 = 24
+
+afirmacion1 = num1 < num2;
+afirmacion2 = num1 == num2;
+
+document.write(afirmacion1 && afirmacion1)	//saltara false, para que sea true las dos afirmaciones deben ser estrictamente tru pero la primera es false, esto equivale al AND
+document.write(afirmacion1 || afirmacion1)	//saltara true, para que sea true almenos una afirmacion debe ser verdadera y si todas son falsas saltara false, esto equivale al OR
+document.write(!afirmacion1)			//saltara false, el signo cambia el booleano, como la afirmacion es verdadera la cambiara a falsa
+document.write(!afirmacion2)			//saltara true, el signo (!) cambia el booleano, como la afirmacion es falsa la cambiara a verdadera
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+camel case
+es la manera en la que trabaja JS, es iniciar la palabras con minuscula y serguirla la siguiente con una mayuscula por ejemplo, holSoyVaron, esto es camel case
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+condicionales
+
+if (nombre == 'david') {	//si se cumple esta condicion se ejecutara lo definido
+   alert("hola")
+}
+else if (nombre == 'andres') {	//si no se cumple la anterior entonces se ejecutara esto, else if se pueden colocar cuantas veces se requiera con variedad de condiciones
+   alert("hola otra persona")
+}
+else {
+   alert("nombre no sirve")	//si nada se cumple entonces con else, sin la condicion, ejecutara lo que se le asigne
+}
+
+se pueden colocar varias condiciones con && siendo este AND y || siendo este OR
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ejercicio 1
+
+A) 3 chicos de 23 años perferctamente normales entran a una heladeria a comprar un helado pero hay problemas: los precios no estan al lado de cada estante con su respectivo helado.
+Ellos quieren comprar el helado mas caro que puedan con la plata quie tienen, asi que... veamos como podemos ayudarlos
+
+Roberto tiene $1.5 USD
+Pedro tiene $1.7 USD
+Cofla tiene $3 USD
+
+Los precios de helados son los siguientes:
+Palito de helado de agua: $0.6 USD
+Palito de helado de crmea: $1 USD
+Bombon helado marca heladix: $1.6 USD
+Bombon helado marca heladovich: $1.7 USD
+Bombon helado marca helardo: $1.8 USD
+potecito de helado con confites: $2.9 USD
+pote de 1/4 KG -> $2.9 USD
+
+	CREAR SOLUCIONES:
+	- Pedirles que ingresen el monto que tienen y mostrarles el helado mas caro que puedan comprar
+	- Si hay 2 o mas con el mismo precio, mostrar ambos
+	- Cofla quiere saber cuanto es el vuelto

@@ -1,0 +1,159 @@
+Capitulo 13
+
+Peticiones HTTP
+
+    - Definición
+    - Cliente y servidor
+    - No guardan información
+
+Datos Estructurados (JSON) --- "JavaScript Object Notation"
+
+    - Definición, usos y sintaxis
+    - Serialization y deserialization
+    - Método parse() - Convierte un string con estructura JSON a formato JSON (deserializer)
+    - Método stringify() - Convierte un dato de JavaScript en una cadena de texto JSON (serializer)
+    - JSON PolyFill - https://developer.mozilla.org/en-US/docs/web/JavaScript/Reference/Global_Objects/JSON/parse
+        Estas funciones simulan un JSON
+---
+const serializado = '{"variable1" : "PEDRO","variable2":"JORGE"}';
+
+const deserializado = JSON.parse(serializado)   //cuando recibimos los datos de un servidor, los debemos deserializar de esta manera
+console.log(deserializado)
+console.log(typeof deserializado)               //sera un objeto
+---
+const deserializado = {"variable1" : "PEDRO","variable2":"JORGE"};
+
+const serializado = JSON.stringify(deserializado)                   //es la manera de serializer, ya que es de esta manera como enviamos datos al servidor
+console.log(serializado)
+console.log(typeof serializado)                                     //sera una cadena de texto (string)
+---------------------------------------------------------------------------------------------------------
+AJAX
+
+    _ Introducción e instalación del servidor
+    _ Objeto XMLHttpRequest
+    _ Enviar peticiones GET
+    _ Trabajar el resultado de las peticiones
+    _ Objeto ActiveXObject
+--------------------------------------------------------------
+let petición;
+
+if(window.XMLHttpRequest) petición = new XMLHttpRequest();
+else petición = new ActiveXObject("Microsoft.XMLHTTP");         //con esto se verifica que se pueda ejecutar en Internet Explorer
+
+
+
+petición.addEventListener("load",()=>{
+    let respuesta;
+    if(petición.status == 200) respuesta = petición.response;
+    else respuesta = "Lo siento, no se ha encontrado el recurso";
+    console.log(JSON.parse(respuesta).Nombre)              //recordar que al pedirlo del servidor se entrega como string, y después se debe deserializer
+})
+
+petición.open("GET","informacion.txt");                   //método que abre una petición
+
+petición.send();
+--------------------------------------------------------------
+    _ Nueva forma de trabajar el resultado
+    _ Enviar peticiones POST
+    _ Objeto FormData
+
+            Aspecto                                               |     Con GET                                 |   Con POST
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Los datos son visibles en la URL                             |     Si                                      |   No
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Los datos pueden permanecer en la historia del               |     Si                                      |   No                 
+    navegador                                                     |                                             |     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Una URL puede ser guardada contenido                         |     Si                                      |   No
+    parámetros de un envió de datos                               |                                             |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Existen restricciones en la longitud de los                  | Si (no se puede superar la                  |   No                    
+    datos enviados                                                | longitud maxima de una URL)                 |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Se considera preferible para envíos de datos                 | No (los datos ademas de s                   | Si (sin que esto signifique que por usar post haya seguridad                          
+    sensibles(datos privados como contraseñas,                    | visibles pueden quedar                      | asegurada)
+    números de tarjeta bancaria, etc.)                            | almacenados en logs)                        |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Codificación en formularios                                  | application/x-www-form-                     | application/x-www-form-urlencoded o multipart/form-data
+                                                                  | urlencoded                                  | Se usa multipart para enviar de datos binarios, por ejemplo ficheros
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Restricciones de tipos de datos                              | Si (solo admite caracteres ASC-II)          | No (admite tanto texto como datos binarios p.ej. archivos)         
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Se considera preferible para disparar acciones               | No (podría ser accedido por un              | Si (sin que esto garantice que no pueda acceder un robot)                            
+                                                                  | robot que dispararía la acción)             |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Riesgo de cacheado de datos recuperados en los               |      Si                                     | No
+    navegadores                                                   |                                             |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    -Posibles ataques e intentos de hacker                        | Si (con mas facilidad)                      | Si (con menos facilidad)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+En JavaScript, las peticiones GET y POST son dos de los métodos HTTP que se utilizan para enviar y recibir datos desde un servidor web. La principal 
+diferencia entre las peticiones GET y POST es cómo se transmiten los datos y cuándo se pueden almacenar en caché.
+
+La petición GET se utiliza para solicitar datos de un servidor, generalmente en forma de una URL que se proporciona como una cadena de consulta en la URL. 
+Los datos de la petición GET se envían en la URL de la petición y pueden ser almacenados en caché por el navegador. La petición GET se puede usar para solicitar recursos estáticos como imágenes, 
+hojas de estilo y archivos de script, así como para obtener datos dinámicos del servidor.
+
+Por otro lado, la petición POST se utiliza para enviar datos al servidor. Los datos se envían en el cuerpo de la petición POST y no se almacenan en caché por el navegador. 
+La petición POST se utiliza a menudo para enviar datos de formularios, enviar archivos y realizar otras acciones que requieren que se envíe información al servidor.
+
+En resumen, las principales diferencias entre las peticiones GET y POST en JavaScript son:
+
+Los datos de la petición GET se envían en la URL, mientras que los datos de la petición POST se envían en el cuerpo de la petición.
+Los datos de la petición GET pueden ser almacenados en caché por el navegador, mientras que los datos de la petición POST no pueden ser almacenados en caché.
+La petición GET se utiliza para solicitar datos, mientras que la petición POST se utiliza para enviar datos al servidor.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    Fetch
+        _ Introducción --- tiene método GET por defecto
+------------------------------------------------------------------------------------------------------------------------------------------------------
+fetch es una función de JavaScript que se utiliza para realizar peticiones HTTP asíncronas (AJAX) para obtener recursos de un servidor web. 
+Esta función permite enviar y recibir datos a través de la red y puede ser usada para obtener recursos como archivos de texto, JSON, imágenes, entre otros.
+
+La sintaxis básica de fetch es la siguiente:
+----------------------------------------------------------
+fetch(url)
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+----------------------------------------------------------
+La función fetch toma como parámetro la URL del recurso que se desea obtener y devuelve una Promesa que resuelve en un objeto de respuesta (response) 
+que contiene la respuesta del servidor. Este objeto de respuesta puede contener información como el estado de la respuesta, las cabeceras y el cuerpo de la respuesta.
+
+El método then se encarga de procesar la respuesta de la petición HTTP. En el ejemplo anterior, se utiliza el método json() para extraer los datos 
+del cuerpo de la respuesta en formato JSON. Los datos se convierten en un objeto JavaScript y se imprimen en la consola con el método console.log.
+
+Si la petición HTTP falla, se captura el error con el método catch.
+
+Además, fetch también permite configurar la petición HTTP mediante opciones adicionales, como encabezados personalizados o el método HTTP utilizado 
+(GET, POST, PUT, DELETE, entre otros). Por ejemplo:
+----------------------------------------------------------
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({name: 'John', age: 30})
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error(error));
+----------------------------------------------------------
+En este ejemplo, se realiza una petición HTTP POST con un objeto JSON en el cuerpo de la petición. 
+os encabezados personalizados se definen en la opción headers.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        _ Basado en promesas
+        _ Objeto Fetch
+        _ text()
+        _ json()
+        _ blob()
+        _ formData()
+        _ arrayBuffer()
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Asynchronisms Platzi
+
+Que es? --- los lenguajes de programación de por si son síncronos,
+
+

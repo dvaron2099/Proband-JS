@@ -1,0 +1,379 @@
+Capitulo 9
+
+Eventos
+
+    - Definición
+    - de Eventos o 'Event Handlers'
+    - Escucha de eventos o 'Event Listeners'
+--------------------------------------------------------
+const button = document.querySelector(".button");
+function saludar(){                     //es recomendable usar funciones flechas
+    alert("hola");
+    button.removeEventListener("click",saludar)
+}
+button.addEventListener("click",saludar);
+/*añade el evento click, en este caso tomara la clase button y al darle click saldrá una alerta de hola
+pero después de ello, removerá este evento*/
+HTML
+<div>
+		<h2>Titulo</h2>
+		<button class="button">Apretame</button>
+</div>
+--------------------------------------------------------
+    - El objeto Event
+--------------------------------------------------------
+const button = document.querySelector(".button");
+button,addEventListener("click",(e)=>{          //Se coloca un nombre de parámetro que generalmente es e, o event o simplemente evento y arrojara en consola las propiedades del evento
+    console.log(e)
+});
+--------------------------------------------------------
+    - Flujo de Eventos o 'event flow'
+    - Event Bubbling vs Event capturing --- Bubbling es por defecto, capturing es por asignación
+--------------------------------------------------------
+JS------
+const button = document.querySelector(".button");
+const contenedor1 = document.querySelector(".contenedor-1")
+const contenedor2 = document.querySelector(".contenedor-2")
+
+contenedor1.addEventListener("click",(e)=>{
+    alert("di click en el contenedor rojo")
+},true);
+
+contenedor2.addEventListener("click",(e)=>{
+    alert("di click en el contenedor azul")
+});
+
+button.addEventListener("click",(e)=>{
+    alert("di click en un botón")
+})
+/*los códigos se ejecutaran del mas especifico hasta el menos especifico, 
+normalmente se ejecutara primero botón, luego azul y por ultimo rojo,
+con este true se ejecutara primero el rojo*/ 
+HTML------
+<div class="contenedor-1">
+	<div class="contenedor-2">
+		<button class="button">Click</button>
+	</div>
+</div>
+--------------------------------------------------------
+    - event.stopsPropagation()
+
+contenedor1.addEventListener("click",(e)=>{
+    alert("di click en el contenedor rojo")
+});
+
+contenedor2.addEventListener("click",(e)=>{
+    alert("di click en el contenedor azul")
+});
+
+button.addEventListener("click",(e)=>{
+    alert("di click en un botón");
+    e.stopsPropagation()
+})
+/*se ejecuta, botón por defecto pero si se le coloca el stopsPropagation en botón, parara y no se ejecutaran los otros*/ 
+
+
+Eventos del Mouse
+
+    - click - ocurre con un click
+    - dblclick - ocurre con un doble click
+
+button.addEventListener("dblclick",(e)=>{
+    alert("di click en un botón");
+    e.stopsPropagation()
+
+    - mouseover - ocurre cuando el puntero se mueve sobre un elemento o sobre uno de sus hijos
+
+button.addEventListener("mouseover",(e)=>{
+    alert("di click en un botón");
+    e.stopsPropagation()
+
+    - mouseout - ocurre cuando se mueve el puntero fuera de un elemento o de sus elementos secundarios
+    
+ button.addEventListener("mouseout",(e)=>{
+    alert("di click en un botón");
+    e.stopsPropagation()   
+    
+    -----otros-----
+    - contextmenu - ocurre con un click en el botón derecho en un elemento para abrir un menu contextual
+    - mouseenter -  ocurre cuando el puntero se mueve sobre un elemento
+    - mousedown - ocurre cuando un usuario oprime un botón del mouse sobre un elemento
+    - mouseleave - ocurre cuando el puntero se mueve fuera de un elemento
+    - mouseup - ocurre cuando un usuario suelta un botón del mouse sobre un elemento
+    - mousemove - ocurre cuando el puntero se mueve mientras esta sobre un elemento
+
+Eventos del teclado
+
+    - keypress - ocurre cuando una tecla se presiona y se suelta en el mismo elemento
+    - keydown - ocurre cuando una tecla se deja de presionar
+    - keyup - ocurre después de que los dos eventos anteriores hayan concluido consecutivamente
+
+Eventos de la interfaz
+
+    - abort - ocurre cuando un elemento madre elimina a su hijo
+    - error - ocurre cuando sucede un error durante la carga de un archivo multimedia
+
+const img = document.querySelector(".img-prueba")
+
+img.addEventListener("error",()=>{
+    console.log("ha sucedido un error")
+})
+
+    - load - ocurre cuando un objetivo se ha cargado
+    - beforeunload - ocurre antes de que el documento este a punto de descargarse
+    - unload - ocurre una vez que se ha descargado una pagina
+    - resize - ocurre cuando se desplaza la barra de desplazamiento de un elemento
+    - scroll - ocurre cuando se desplaza la barra de desplazamiento de un elemento
+    - select - ocurre después se que el usuario selecciona algún texto de <input> o <textarea>
+
+Timers (Temporizadores)
+
+    - serTimeout() --- 
+    - setInterval()
+    - clearTimeout()
+    - clearInterval()
+
+Mas en https:///www.w3schools.com/jsref/obj_events.asp
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ejercicio
+
+A) El imbécil de cofla reprobó 2 materias y ahora tiene que enviar un formulario para registrarse en la materia que debe
+
+    - El formulario debe contener nombre completo, mail y materia adeudada
+    - Se debe validar que el mail sea valido, que los nombres sean reales
+    - Se debe enviar al servidor de manera pulida
+----------JS----------------------------------------------
+const botón = document.getElementById("btn-enviar");
+const resultado = document.querySelector(".resultado");
+
+const validarCampos = () => {
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("mail").value;
+    const materia = document.getElementById("materia").value;
+    let error = [];
+
+    if (nombre.length < 5 || nombre.length > 40) {
+        error[0] = true;
+        error[1] = "El nombre es inválido";
+        return error;
+    } else if (email.length < 5 || email.length > 40 || email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+        error[0] = true;
+        error[1] = "El mail es inválido";
+        return error;
+    } else if (materia.length < 4 || materia.length > 40) {
+        error[0] = true;
+        error[1] = "La materia no existe";
+        return error;
+    }
+
+    error[0] = false;
+    return error;
+};
+
+botón.addEventListener("click", (e) => {
+    e.preventDefault();
+    let error = validarCampos();
+    if (error[0]) {
+        resultado.innerHTML = error[1];
+        resultado.classList.add("red");
+        resultado.classList.remove("green");
+    } else {
+        resultado.innerHTML = "Solicitud enviada correctamente";
+        resultado.classList.add("green");
+        resultado.classList.remove("red");
+    }
+});
+----------CSS----------------------------------------------
+body{
+    color: #333;
+    font-family: sans-serif;
+    background: black;
+}
+
+input{
+    display: block;
+    width: 100%;
+    padding: 9px;
+    margin: 12px auto;
+    box-sizing: border-box;
+    border: none;
+    border-top: 2px solid #48e;
+    background: transparent;
+    outline: none !important;
+    transition: background 0.3s;
+    color: #fff;
+}
+
+input::placeholder{
+    color:#48e;
+    transition: color 0.3s;
+}
+
+input:hover{
+    background: #26a;
+}
+input:hover::placeholder{
+    color:#fff;
+}
+
+input[type="submit"]{
+    width: 60%;
+    padding: 12px;
+    background: #26a;
+    color: #fff;
+    margin: 24px 0;
+    margin-bottom: 12px;
+}
+
+input[type="submit"]:hover{
+    background: #048;
+}
+
+form{
+    width: 86%;
+    margin: auto;
+    background: #013;
+    padding: 30px;
+}
+
+h2{
+    color: #fff;
+    margin-bottom:36px;
+}
+
+.green{
+    color: #9c9
+}
+.red{
+    color:#c99
+}
+----------HTML----------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>parte 2</title>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<form autocomplete="off">
+		<h2>INSCRIPCIÓN DE MATERIAS ADEUDADAS</h2>
+		<input type="text" placeholder="Nombre Completo" id="nombre">
+		<input type="email" placeholder="Mail" id="mail">
+		<input type="text" placeholder="Materia Adeudada" id="materia">
+		<input type="submit" value="Solicitar Mesa" id="btn-enviar">
+		<div class="resultado"></div>
+	</form>
+<script src="codigo.js"></script>
+</body>
+</html>
+--------------------------------------------------------------------------------------------
+B) Los datos de cofla y de otros alumnos fueron recibidos y ya están almacenados, ahora hay que crear un
+sistema que muestre esa información y se pueda asignar cuando rinde
+
+    - La interfaz
+    - Debe contener todos los datos de manera estructurada
+    - El profesor puede seleccionar en cual de las 2 semanas rinde el usuario
+    - Si el profesor confirma, los datos se deben actualizar y reemplazar el espacio de selección de semana por la
+    semana seleccionada
+----------JS----------------------------------------------
+let alumnos=[{
+    nombre: "David varón",
+    email: "varondavid20@gmail.com",
+    materia: "Programación"
+},{
+    nombre: "Karin Guerra",
+    email: "karin@gmail.com",
+    materia: "Física 1"
+},{
+    nombre: "Facundo Roberto",
+    email: "robert@gmail.com",
+    materia: "Calculo 2"
+},{
+    nombre: "Cofla",
+    email: "cofla@gmail.com",
+    materia: "Recreo"
+},{
+    nombre: "Jorge Ramirez",
+    email: "ramirez@gmail.com",
+    materia: "Literatura"
+}]
+
+const boton = document.querySelector(".boton-confirmar");
+const contenedor = document.querySelector(".grid-container")
+
+
+
+for (alumno in alumnos){
+    let datos =alumnos[alumno];
+    let nombre =datos["nombre"];
+    let email =datos["email"];
+    let materia =datos["materia"];
+    let htmlCode = `
+    <div class="grid-item nombre">${nombre}</div>
+    <div class="grid-item email">${email}</div>
+    <div class="grid-item materia">${materia}</div>
+    <div class="grid-item semana">
+        <select class="semana-elegida">
+            <option value="semana 1">Semana 1</option>
+            <option value="semana 2">Semana 2</option>
+        </select>
+    </div>`;
+    contenedor.innerHTML+=htmlCode;
+}
+
+
+
+boton.addEventListener("click",()=>{
+    let confirmar = confirm("Realmente quieres confirmar las mesas?");
+    if (confirmar){
+        document.body.removeChild(boton)
+    let elementos = document.querySelectorAll(".semana");
+    let semanasElegidas = document.querySelectorAll(".semana-elegida");
+    for (elemento in elementos){
+        semana = elementos[elemento];
+        semana.innerHTML = semanasElegidas[elemento].value;
+    }
+    }
+})
+----------HTML----------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>parte 2</title>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<div class="grid-container">
+	</div>
+	<button class="boton-confirmar">Confirmar</button>
+<script src="codigo.js"></script>
+</body>
+</html>
+----------CSS----------------------------------------------
+body{
+    font-family: sans-serif;
+    background: #ededed;
+}
+.grid-container{
+    display: grid;
+    grid-template-rows: 50px;
+    grid-template-columns: repeat(4,minmax(min-content,max-content));
+    grid-auto-rows: 50px;
+}
+.grid-container .grid-item{
+    padding: 10px;
+    border: 1px solid #26a;
+    margin: 5px;
+}
+.boton-confirmar {
+    padding: 9px 40px;
+    background: #48e;
+    color: #fff;
+    border: none;
+    margin: 30px;
+}

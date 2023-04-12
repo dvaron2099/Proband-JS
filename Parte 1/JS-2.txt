@@ -1,0 +1,204 @@
+Capitulo 2
+------------
+arrays
+----------------------
+let frutas = ['banana', 'manzana','pera']	//agrupa varios elementos en un arreglo, el primer elemento es el elemento cero y asi van aumentando
+						// se pueden colocar cadenas, numeros enteros, flotantes y booleanos en un array
+document.write(frutas[1])			//mostrara banana, si colocasemos 3 entonces saltaria undefined ya que siemnpre estara declarada pero no definida
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+arrays asociativos
+--------------------------------------------
+let PC = {							//asi se crea el array
+	nombre: 'VaronPC',
+	procesador: 'Intel Core I5 7th Gen',
+	ram: '24GB',
+	espacio: '1.25TB',
+};
+
+
+let nombre = PC['nombre'];					//se deben especificar cada parte en una variable por separado
+let procesador = PC['procesador'];
+let ram = PC['ram'];
+let espacio = PC['espacio'];
+
+frase = `el nombre de mi PC es: <b>${nombre}</b> <br>
+		el procesador es: <b>${procesador}</b> <br>
+		la memoria ram es: <b>${ram}</b> <br>
+		el espacio en disco es de: <b>${espacio}</b> <br>`
+
+
+document.write(frase);
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+while --- pregunta, si se cumple ejecutara el codigo (tener cuidado con los bucles infinitos, estos tildan la PC)
+--------------------------------------------
+let n = 0;
+
+while (n<100){			//mientras se siga cumpliendo, se ejecutara la accion, si no hay nada que la cambie sera un bucle infinito
+	document.write(n)
+	n++					//esto suma una unidad a 'n', n-- restaria una unidad, esto cambia la condicioon evitando el buble infinito
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+do while --- primero ejecuta el codigo, al menos una vez y despues pregunta
+--------------------------------------------
+let n = 0;
+
+do {					//esta vez ejecutara la primera vez sin importar que la condicion se cumpla o no
+	document.write(n + '<br>');	//aparecera el numero
+	n++;				//sumara una unidad y pasara al while, y ejecutara todo hasta que la condicion deje de cumplirse
+}
+
+while (n<20)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+break --- rompe el bucle
+--------------------------------------------
+let n = 0;
+
+while (n<10000){		//en condiciones normales se ejecutaria 1000 veces			
+	document.write(n);
+	n++;
+	if (n==10){
+		break			//este condicional hace que si es igual a 10 el bucle se rompa y se ejecutara solo 10 veces
+	}	
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+for --- genera bucles, tambien se le puede romper con break
+--------------------------------------------
+for (let i=0; i<6; i++){		//primero se inicializa la variables, luego se coloca la condicion y despues se modifica la variable hasta la que condicion no se cumpla
+	document.write(i + '<br>')
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+continue --- salta la condicion y sigue derecho
+--------------------------------------------
+for (let i=0; i<20; i++){
+	if (i==10){
+		continue;			//este condicional hace que si es igual a 10 el bucle siga derecho, no la cuente
+	}		
+	document.write(i + '<br>')
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+for in --- recorre las posiciones
+for of --- recorre los valores
+--------------------------------------------
+let animales = ['gato','perro','caballo']
+
+
+//animal sera cada uno de los elementos del array pero hay una diferencia en ambos casos
+
+for (animal in animales){
+	document.write(animal + '<br>') //con in se mostraran las posiciones, por lo que aparecera 0 1 2 que son las posiciones de los animales
+}
+
+for (animal of animales){
+	document.write(animal + '<br>') //con of se mostrara el valor de cada posicion, por lo que aparecera directamente gato perro caballo que son los valores
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+array1 = ['maria','josefa','roberta']
+array2 = ['pedro','marcelo',array1]
+
+
+for (let array in array2) {
+	if (array == 2){
+		for(let array of array1){
+			document.write(array + '<br>')
+		}
+	} else {
+		document.write(array2[array] + '<br>')
+	}
+}
+/*
+Resultado
+pedro	--- aparece cuando recorre la posicion 0 y 1, se cumple el else y toma los vaslores del array2 en esas posiciones al colocar array3[array]		
+marcelo	--- aparece cuando recorre la posicion 0 y 1, se cumple el else y toma los vaslores del array2 en esas posiciones al colocar array3[array]
+maria	--- se cumple el if y con el for of muestra los valores del array
+josefa	--- se cumple el if y con el for of muestra los valores del array
+roberta	--- se cumple el if y con el for of muestra los valores del array
+*/
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Funciones
+--------------------------------------------
+function saludar() {
+respuesta= prompt("oeee como anda su dia");
+if (respuesta== 'bien') {
+	alert('me alegro')
+} else {
+	alert('una pena')
+}
+}
+
+saludar()		// ejecuta la funcion 5 veces
+saludar()
+saludar()
+saludar()
+saludar()
+--------------------------------------------
+parametros
+--------------------------------------------
+function suma(num1,num2){
+	let res = num1 + num2;
+	document.write(res);
+	document.write('<br>');
+}
+
+suma(3,4)		//arroja 7
+suma(4,5)		//arroja 9
+suma(10,10)		//arroja 20
+--------------------------------------------
+return
+--------------------------------------------
+function saludar() {	
+	alert ('hola)
+	return "todo okay"	//el return es lo que retornara la funcion, osea, lo que botara la funcion al final, si hay mas cosas despues del return no las tomara en cuenta
+}
+
+let saludo = saludar()		//se pueden guardar funciones en variables
+document.write(saludo)
+--------------------------------------------
+funciones flecha
+--------------------------------------------
+const saludar = nombre =>{				//saludar seria el nombre de la funcion y 'nombre' seria el parametro, si son varios usar parentesis
+	document.write('hola como estas? ' + nombre)
+}
+saludar('pedro')
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ejercicio 2
+
+A) Un joven muy afortunado logro ganar el primero premio de la loteria... exacto, estamos hablando del poblre al que cofla le dio una mano, este pobre decide hacer una fiesta para festejar que salio de la pobreza con este millonario compro una maquina que deja solamente a los mayores de edad, entre otras cosas..
+	
+	- Dejar pasar solo a los mayores de edad
+	- La primer persona que entre despues de las 2 AM, no paga.
+--------------------------------------------
+/*let free = false;
+
+const validarCliente = (time) =>{
+	let edad = prompt ('Cual es tu edad?');
+	if (edad>18){
+		if (time>= 2 && time < 7 && free == false){
+			alert('poder pasar gratris, sos la primera persona despues de las 2');
+			free = true
+		} else{
+			alert(`son las ${time}:00HS y debes pagar entrada`)
+		}
+	} else{
+		alert('oee, conseguite cedula antes parcero')
+	}
+}
+
+validarCliente(23);
+validarCliente(24);
+validarCliente(0.2);
+validarCliente(0.6);
+validarCliente(1);
+validarCliente(2);
+validarCliente(2.4);
+validarCliente(3);*/
+--------------------------------------------
+
+
+B) Cofla vuelve de la comisaria esaustp y por lo cansado que estaba se fue a dormir... Al otro dia comienzan las clases del ciclo de la universidad (porque cofla quiere ser programador y se inscribio en la facultad de ingenieria para estudiar desarrollo de software).<br>
+En su curso en total son 19 alumnos, pero surgio un problema que complico un poco a la facultad:
+Se rompio el sistema de registro de asistencias y durante los proximos 30 dias no se podran hacer registros de datos de ningun tipo, por ende las clases no podran comenzar hasta que esto este solucionado.
+
+Crear mini-sistema que nos permita registrar los alumnos que estan presentes (P) y asuentes (A) en clase
+Pasados los 30 dias mostrar la situacion final de todos los alumnos (Nro total de presentes y ausentes)
+Se puede tener un maximo de 10% de ausencias por semestre, si se tienen mas aclarar que esta reprobado

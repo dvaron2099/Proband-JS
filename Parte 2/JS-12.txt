@@ -1,0 +1,211 @@
+Capitulo 12
+
+Callbacks
+
+    - Concepto (Function in function)
+------------------------------------------------------------
+function prueba(callback){
+    callback("Roberto")
+}
+
+function decirNombre(nombre){
+    console.log(nombre)
+}
+prueba(decirNombre)    //una función que llama otra función
+------------------------------------------------------------
+    - Ejemplos
+
+    - Problemas de los Callbacks
+
+Promesas
+
+    - Concepto
+    - Que puede representar
+        *terminación de una operación 
+        *fracaso de una operación asíncrona
+    - Ejemplos y solución al Problema de los Callbacks
+------------------------------------------------------------
+let nombre = "pedro";
+
+const promesa = new Promise((resolve,reject)=>{
+    if (nombre !== "pedro") reject("Lo siento, el nombre no es pedro")
+    else resolve(nombre)
+})
+
+promesa.then((resultado)=>{                                     //método de las promesas para acceder a los datos que están encapsulados
+    console.log(resultado)
+})  .catch((e)=>{                                               // catch maneja los errores
+    console.log(e)
+})                  
+------------------------------------------------------------ 
+El objeto Promise en JavaScript se utiliza para manejar operaciones asíncronas, es decir, 
+tareas que pueden tardar un tiempo en completarse y que no bloquean la ejecución del código 
+en el hilo principal. Es muy común en aplicaciones web para realizar llamadas a servidores o 
+manipulación de archivos.
+
+Un Promise representa una operación que no se ha completado pero que se espera que lo haga en el futuro, 
+y que puede tener dos estados: pending (pendiente) o settled (resuelto). Cuando se resuelve una promesa, 
+se pueden tener dos resultados: un valor o un error.
+
+Una promesa se crea usando el constructor Promise(), al cual se le pasa una función callback que contiene el 
+código asincrónico que se desea ejecutar. La función debe tener dos parámetros, resolve y reject, que son funciones 
+que deben ser llamadas para indicar si la promesa ha sido resuelta con éxito o con un error.
+
+Por ejemplo, el siguiente código crea una promesa que se resuelve después de un segundo, 
+devolviendo el valor "Hola mundo":
+
+const miPromesa = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Hola mundo");
+  }, 1000);                 //recordar que son mili-segundos (ms)
+});
+
+miPromesa.then((resultado) => {
+  console.log(resultado);
+});
+
+La función setTimeout() se utiliza para simular una tarea asincrónica que tarda un segundo en completarse. 
+Una vez que se completa la tarea, la promesa se resuelve con éxito y se llama a la función resolve() 
+pasandole el resultado. Luego, se utiliza el método then() para definir qué hacer 
+con el resultado de la promesa, en este caso, imprimirlo en la consola.
+
+También es posible manejar errores con las promesas utilizando el método catch(). 
+Por ejemplo, si se intenta resolver una promesa con un error, 
+se puede usar reject() para enviar el error y luego manejarlo en catch():
+
+const miPromesa = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject("Hubo un error");
+  }, 1000);
+});
+
+miPromesa
+  .then((resultado) => {
+    console.log(resultado);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  ------------------------------------------------------------ 
+  async y await --- trabajan con promesas
+
+
+const obtenerInformación = (text)=>{
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{resolve(text)},Math.random()*200)
+    })
+}
+
+
+const mostrarData = async ()=>{
+    data1 = await obtenerInformación("1: pito")
+    data2 = await obtenerInformación("2: bernardo")
+    data3 = await obtenerInformación("3: eduardo")
+    console.log(data1);
+    console.log(data2);
+    console.log(data3);
+}
+
+mostrarData()                       //muestra los datos de manera ordenada
+---------------------------------------------------------------------------
+Ejercicio
+
+A) Cofla esta en su ultimo año y necesitaba recuperar todas sus notas para que le puedan decir si efectivamente paso al ultimo semestre,
+de ser asi... cofla ya estaría a un solo paso de finalizar su carrera como ingeniero! pero, hay un Problema: estas notas estas almacenadas en otro servidor.
+
+    - Crear un sistema que almacena toda la información de las materias y las muestre en pantalla de forma ordenada
+
+-----------------HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>parte 2</title>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<div class="materias">
+	</div>
+<script src="codigo.js"></script>
+</body>
+</html>
+-----------------CSS
+body{
+    color: #222;
+    font-family: sans-serif;
+}
+
+.materias {
+    width: 90%;
+    background: #ccc;
+    padding: 2px;
+    font-size: 20px;
+}
+
+.materia{
+    background: #efefef;
+    display: flex;
+    width: 100%;
+}
+
+.materia div{
+    padding: 20px;
+}
+
+.materia .nota{
+    flex-basis: 20px;
+    background: #ddd;
+    font-weight: 700;
+}
+
+.materia .nombre{
+    flex-grow: 1;
+}
+-----------------JS
+
+const materiasHTML = document.querySelector(".materias");
+
+const materias = [
+    {
+        nombre: "Física 4",
+        nota: 7
+    },{
+        nombre: "Calculo 3",
+        nota: 8
+    },{
+        nombre: "Bases de datos 3",
+        nota: 9
+    },{
+        nombre: "Matemáticas discretas 2",
+        nota: 8
+    },{
+        nombre: "Programación 4",
+        nota: 7
+    }
+];
+
+const obtenerMateria = (id)=>{
+    return new Promise ((resolve,reject)=>{
+        materia = materias[id];
+        if (materia == undefined) reject("La materia no existe");
+        else setTimeout(()=>{resolve(materia)},Math.random()*400);
+    })
+}
+
+const devolverMaterias = async ()=>{
+    let materia = [];
+    for(let i=0; i<materias.length; i++){
+        materia[i] = await obtenerMateria(i);
+        console.log(materia[i]);
+        let newHTMLCode =`
+        <div class="materia">
+            <div class="nombre">${materia[i].nombre}</div>
+            <div class="nota">${materia[i].nota}</div>
+        </div>`;
+        materiasHTML.innerHTML += newHTMLCode;
+    }
+}
+
+
+devolverMaterias()

@@ -1,0 +1,45 @@
+Capitulo 5
+----------------------------------------------
+Consola
+----------------------------------------------funciones de registro----------------------------------------------
+- assert() - Aparece un mensaje de error en la consola si la afirmacion es falsa. Si la afirmacion es verdadera, no aparecera nada (NO ESTANDAR)
+
+console.assert(5>3)		//no aparecera nada porque la afirmacion es correcta
+console.assert(5<3)		//saltara un error en la consola porque es incorrecto
+
+- clear() - limpia la consola
+
+console.clear()
+
+- error() - Muestra un mensaje de error en la consola web
+
+console.error("oe parce que hiciste?")	//este mensaje aparecera para mostrar los errores en el codigo, se puede ejecutar desde la consola o desde VS condicionales
+
+- info() - Emite un mensaje informativo a la consola Web. En firefos y Chrome, se muestra un pequeño icono "¡" junto a estos elementos en el registro de la consola web
+
+console.info("Mensaje informativo")
+
+- log() - Muestra un mensaje informativo en la consola web (o del interprete JavaScript)
+
+console.log("esto es similar al anterior, pero es un mensaje de depuracion")
+
+- table() - Esta funcion toma un argumento obligatorio: data, que debe ser un array o un objeto, y un parametro adicional: columns y nos muestra una tabal en consola
+
+console.table([3,4,5,6,7,8])		//colocara una tabla con una columna de index con las posiciones de 0 hasta la ultima posicion del array y la otra columna los valores (value) del array frente a sus respectivas posiciones
+
+- warn() - Imprime un mensaje de advertencia en la consola web
+
+console.warn("esto arrojara un mensaje que es una advertencia")
+
+- dir() - Despliegue una lista interactiva de las propiedades del objeto JavaScript especificado [NO ESTANDAR]
+----------------------------------------------Funcion de conteo----------------------------------------------
+- count() - Registra el numero de veces que se llama a count(). Esta funcion toma como argumento opcional una etiqueta.
+- countReset() - Resetea el contador console.count()
+----------------------------------------------Funcion de agrupacion----------------------------------------------
+- group() - Crea un nuevo grupo en linea en el registro de la consola web
+- groupEnd() - Remueve un grupo en linea en elregistro de la consola web
+- groupCollapsed() - Crea un grupo en linea pero contraido, el usuario debe expandirlo para verlo
+----------------------------------------------funciones de temporizacion----------------------------------------------
+- time() - incia un temporizador
+- timeEnd() - registra el valor actual de un temporizador
+- timeLog() - Detiene un temporizador

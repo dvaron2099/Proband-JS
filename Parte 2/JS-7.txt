@@ -1,0 +1,106 @@
+Capitulo 7
+
+Introducción a window
+
+- Hereda las propiedades de EventTarget
+- open() - carga un recurso en el contexto de un nuevo navegador o uno que ya existe
+- close() - cierra la ventana actual, o la ventana en la que se llamo
+- closed - indica si la ventana referenciada esta cerrada o no
+------------------------------------------------------------------------------------------
+let youtubeURL = "https://youtube.com";
+ventana = window.open(youtubeURL);      //abre Youtube una vez arranca la pagina
+ventana.closed                          //devolverá false porque en este punto, la ventana esta abierta 
+ventana.close()                         //cierra ventana que esta abriendo Youtube
+ventana.closed                        //en este punto que la ventana se cerro, devolverá true
+------------------------------------------------------------------------------------------
+- name - obtiene / establece el nombre del contexto de exploración de la ventana
+- stop() - detiene la carga de recursos en el contexto de navegación                    // para la ejecución, es similar a la x cuando se esta cargando una pagina
+- alert() - muestra un cuadro de alerta en el contenido especificado y un botón Aceptar // ya se vio
+- print() - abre el cuadro de dialogo imprimir para imprimir el documento actual
+- prompt() - abre un cuadro de dialogo con un mensaje que solicita al usuario un dato (string) // ya se vio
+- confirm() - abre un cuadro de dialogo con un mensaje y dos botones: Aceptar y Cancelar
+------------------------------------------------------------------------------------------
+respuesta = confirm("Esta seguro que desea salir?") //abrirá un cuadro que tire esta pregunta y podremos seleccionar aceptar o cancelar
+console.log(respuesta)                              //si la respuesta fue aceptar devolverá true y si fue cancelar devolverá false
+------------------------------------------------------------------------------------------
+
+- screen -  devuelve una referencia al objeto de pantalla asociado con la ventana
+- screenLeft - devuelve la distancia horizontal entre el borde izquierdo del navegador y el borde izquierdo de la pantalla
+- screenTop - devuelve la distancia vertical entre el borde superior del navegador y el borde superior de la pantalla
+- scrollX - devuelve el numero de pixeles que el documento se desplaza actualmente horizontalmente
+- scrollY - devuelve el numero de pixeles que el documento se desplaza actualmente verticalmente
+------------------------------------------------------------------------------------------
+toma como referencia las barras que se usan para subir y bajar, el scrollX cuenta cuantos pixeles se desplaza dicha barra, si no tiene devolverá cero y es igual en el caso de scrollY
+------------------------------------------------------------------------------------------
+- scroll() - desplaza la ventana a un lugar particular en el documento. (con options y con posiciones)
+
+- resizeBy() - cambia el tamaño de la ventana actual en una cantidad especificado
+- resizeTo() - dimensiona didácticamente la ventana
+- moveBy() - mueve la ventana en una ubicación relativa
+- moveTo() - mueve la ventana en una ubicación absoluta
+
+- objetos barprop
+        _ locationbar
+        _ menubar
+        _ personalbar
+        _ scrollbars
+        _ statusbar
+        _ toolbar
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Location
+
+- window.location.href      ------------> (devuelve el href (URL) de la pagina actual)
+------------------------------------------------------------------------------------------
+const href = window.location.href;  //permite localizar la ubicación, en este caso ubicara el servidor local que crea VS code
+document.write(href)                //http://127.0.0.1:5500/JavaScript/Parte%202/, si lo usamos por ejemplo en youtube devolver https://www.youtube.com/
+------------------------------------------------------------------------------------------
+- window.location.hostname  ------------> (devuelve el nombre de dominio del servidor web)
+------------------------------------------------------------------------------------------
+window.location.hostname            // www.youtube.com si lo usamos en youtube devolverá el dominio del servidor de youtube, incluyendo el subdominio que es (www.)
+------------------------------------------------------------------------------------------
+- window.location.pathname  ------------> (devuelve la ruta y el nombre de archivo de la pagina actual, osea, devuelve la ubicación de la pagina dentro del dominio, si es youtube por ejemplo devolverá todo lo que este después de lo que aparezca en youtube.com/...)
+- window.location.protocol  ------------> (devuelve el protocolo web utilizado(http: o https:), con la "S" es que el sitio es seguro, S es del ssl)
+- window.location.assign()  ------------> (carga un nuevo documento)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+a) Después de aprobar, cofla se compra una mejor computadora para poder programar mejor y hacer todo de una forma mas optima pero necesita una resolución optima para poder trabajarla.
+        - Debe ser al menos full HD
+        - Cuando la este por comprar, preguntarle si esta seguro
+------------------------------------------------------------------------------------------
+let alto = window.screen.availHeight;   //también se puede usar "window.screen.height"
+let ancho = window.screen.availWidth;
+
+comprar = confirm(`el alto es: ${alto} el ancho es: ${ancho}`);
+
+if (comprar){
+    alert("compra realizada exitosamente")
+}
+else{
+    alert("compra cancelada")
+}
+/*Nota: window.screen.availHeight Es la altura que puede tener la window del browser si esta maximizada, incluidas las barras del browser 
+mientras que en window.screen.height básicamente es el alto total de la pantalla*/
+------------------------------------------------------------------------------------------
+b) cofla llega a su casa y abre una pagina y oprime F11, desde ahi se pone a navegar pero hay un problema... como ahora esta en pantalla completa no puede ver ni la barra de marcadores,
+ni el protocolo, ni la URL, ni ninguna información que nos puede otorgar la interfaz que contiene la barra de búsqueda.
+
+    - Crear un sistema que muestre los suficientes datos como para conocer el sitio web.
+------------------------------------------------------------------------------------------
+let href = window.location.href;
+let pathname = window.location.pathname;
+let hostname = window.location.hostname;
+let protocol = window.location.protocol;
+
+let html = `Protocolo: <b>${protocol}</b><br>`
+html += `hostname: <b>${hostname}</b><br>`
+html += `pathname: <b>${pathname}</b><br>`
+html += `URL completa: <b>${href}</b><br>`
+
+document.write(html)
+
+/*Devuelve
+Protocolo: http:
+hostname: 127.0.0.1
+pathname: /JavaScript/Parte%202/
+URL completa: http://127.0.0.1:5500/JavaScript/Parte%202/
+*/

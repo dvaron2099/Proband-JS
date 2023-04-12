@@ -1,0 +1,64 @@
+Capitulo 8
+
+- Herramientas de Desarrollo del navegador
+
+- Pestaña Elements
+
+    - Filtros y buscar por palabras claves
+    - Modificar, crear y eliminar etiquetas
+    - Modificar propiedades de CSS
+    - Event listeners
+    - Properties
+    - Opciones para coplar
+    - Seguir explorando
+
+- Pestaña resources
+
+    - Ver y guardar archivos
+    - Información ofrecida
+    - Cambios en tiempo real
+    - Snippets - Ejecutar código por fragmentos
+
+- Pestaña Networks
+
+    - Interfaz
+    - Sort By y Filtros de Búsqueda
+    - Limpiar Cookies y cache
+    - Importar y Exportar
+
+- Pestaña TimeLine
+
+    - Uso y grabación
+    - Screenshots de la grabación
+    - Controls
+    - Overview
+            *FPS, CPU y Net
+    - Flame chart
+    - Details
+    - Sugerencias y grabación
+
+- Pestaña application
+
+    - Application
+    - Storage
+    - Cache
+    - Background Services
+    - Frames
+
+- Pestaña Console
+
+    - Funcionamiento
+    - Apilamiento de mensajes
+    - Show timestamps
+    - Borrar el historial
+    - Conservar el historial
+    - Guardar el historial
+    - Elección del contexto de ejecución
+    - Filtrado de los resultados de Console
+    - Filtros por nivel de gravedad
+            * Todos     (Muestra todos los resultados de Console)
+            * Errors    (Solo muestra los resultados de console error)
+            * Warnings  (Solo muestra los resultados de console warning)
+            * Info      (Solo muestra los resultados de console info ())
+            * Logs      (Solo muestra los resultados de console log())
+            * Debug     (Solo muestra los resultados de console timeline)
